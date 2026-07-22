@@ -176,12 +176,27 @@
   .float-wa svg{ width:24px; height:24px; fill:#fff; }
 
   footer{
-    text-align:center; padding: 44px 6vw 56px;
-    background: var(--lavender-soft);
-    color:var(--text-muted); font-size:0.78rem;
-  }
-  footer .brand-mini{ font-family:'Alex Brush', cursive; color:var(--purple); font-size:1.8rem; margin-bottom:6px; }
-  footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
+  text-align:center; padding: 44px 6vw 56px;
+  background: var(--lavender-soft);
+  color:var(--text-muted); font-size:0.78rem;
+}
+.footer-logo-img{
+  max-width: 160px;
+  width: 40%;
+  height: auto;
+  margin: 0 auto 10px;
+}
+footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
+.social-links{
+  display:flex; justify-content:center; gap:16px;
+  margin-top:18px;
+}
+.social-links a{
+  color: var(--purple);
+  transition: color .2s ease, transform .2s ease;
+}
+.social-links a:hover{ color: var(--purple-dark); transform: translateY(-2px); }
+.social-links svg{ width:20px; height:20px; }
 
   @media (max-width:480px){
     header{ padding:48px 6vw 44px; }
@@ -218,8 +233,16 @@
 </a>
 
 <footer>
-  <p class="brand-mini">Lunamy</p>
+  <img src="images/logo-sin-fondo.png" alt="Lunamy" class="footer-logo-img">
   <p>Joyería &amp; accesorios · Pedidos directos por WhatsApp</p>
+  <div class="social-links">
+    <a href="https://instagram.com/lunamy.muse" target="_blank" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-2.7 0-3.05.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.16-.56.55-.9 1.11-1.16 1.77-.25.64-.42 1.37-.47 2.43C2 8.95 2 9.3 2 12s.01 3.05.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.16 1.77.55.56 1.11.9 1.77 1.16.64.25 1.37.42 2.43.47C8.95 22 9.3 22 12 22s3.05-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.16.56-.55.9-1.11 1.16-1.77.25-.64.42-1.37.47-2.43.05-1.07.06-1.42.06-4.12s-.01-3.05-.06-4.12c-.05-1.06-.22-1.79-.47-2.43-.26-.66-.6-1.22-1.16-1.77-.55-.56-1.11-.9-1.77-1.16-.64-.25-1.37-.42-2.43-.47C15.05 2 14.7 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.97.04 1.5.21 1.85.34.47.18.8.4 1.15.75.35.35.57.68.75 1.15.13.35.3.88.34 1.85.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.97-.21 1.5-.34 1.85-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.35.13-.88.3-1.85.34-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.97-.04-1.5-.21-1.85-.34-.47-.18-.8-.4-1.15-.75-.35-.35-.57-.68-.75-1.15-.13-.35-.3-.88-.34-1.85C3.81 14.99 3.8 14.67 3.8 12s.01-2.99.06-4.04c.04-.97.21-1.5.34-1.85.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.35-.13.88-.3 1.85-.34C9.01 3.81 9.33 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 0 0 10.3 5.15 5.15 0 0 0 0-10.3zm0 8.5a3.35 3.35 0 1 1 0-6.7 3.35 3.35 0 0 1 0 6.7zm5.35-8.7a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+    </a>
+    <a href="https://tiktok.com/@_lunamyshop" target="_blank" title="TikTok">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg>
+    </a>
+  </div>
 </footer>
 
 <script>
