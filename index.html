@@ -157,6 +157,25 @@
   background: #fff;
   transform: scale(1.3);
 }
+.sold-out-thumb .thumb-img,
+.sold-out-thumb .thumb-dots{
+  opacity: 0.4;
+}
+.sold-out-badge{
+  position:absolute; top:12px; left:12px;
+  background: var(--purple-dark);
+  color:#fff;
+  font-family:'Tenor Sans', sans-serif;
+  font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase;
+  padding:5px 12px;
+  border-radius:999px;
+}
+.order-btn.disabled{
+  background: #cbc3d6;
+  color:#8a7f97;
+  cursor: default;
+  pointer-events: none;
+}
   
   .info{ padding: 20px 20px 22px; display:flex; flex-direction:column; gap:6px; flex:1; }
   .cat-label{ font-family:'Tenor Sans', sans-serif; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color: var(--purple); }
@@ -270,14 +289,14 @@ footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
 
   // ======= PRODUCTOS DE EJEMPLO — reemplaza con tus productos reales =======
   const PRODUCTS = [
-    { name: "Conjunto Maripositas 🦋", category: "Collares", desc: "", price: "34.000", images: ["images/cadena-mariposa.jpeg", "images/conjunto-mariposa.jpeg"] },
+    { name: "Conjunto Maripositas 🦋", category: "Collares", desc: "", price: "34.000", images: ["images/cadena-mariposa.jpeg", "images/conjunto-mariposa.jpeg"], soldOut: true },
     { name: "Topitos Huellitas 🐾", category: "Aretes", desc: "", price: "8.000", img: "images/topitos-huellitas.jpeg"  },
     { name: "Topitos Corazón ❤️", category: "Aretes", desc: "", price: "8.000", img: "images/topitos-corazon.jpeg" },
     { name: "Argollas Ovaladas medianas ✨", category: "Aretes", desc: "", price: "16.000", img: "images/argollas-ovaladas-medianas.jpeg"  },
     { name: "Argollas pequeñas ✨", category: "Aretes", desc: "", price: "12.000", img: "images/argollas-pequeñas.jpeg"  },
     { name: "Argollas Medianas ✨", category: "Aretes", desc: "", price: "12.000", img: "images/argollas-medianas.jpeg"  },
-    { name: "Argollas grandes ✨", category: "Aretes", desc: "", price: "12.000", img: "images/argollas-grandes.jpeg" },
-    { name: "Argollas trenzadas ✨", category: "Aretes", desc: "", price: "12.000", img: "images/argollas-trenzadas.jpeg" }
+    { name: "Argollas grandes ✨", category: "Aretes", desc: "", price: "12.000", img: "images/argollas-grandes.jpeg", soldOut: true },
+    { name: "Argollas trenzadas ✨", category: "Aretes", desc: "", price: "12.000", img: "images/argollas-trenzadas.jpeg", soldOut: true }
   ];
 
   const grid = document.getElementById('grid');
@@ -329,24 +348,31 @@ footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
     ? `<div class="thumb-dots">${imgs.map((_, i) => `<span class="dot${i === 0 ? ' active' : ''}"></span>`).join('')}</div>`
     : "";
 
-  card.innerHTML = `
-    <div class="thumb${imgs.length ? '' : ' no-photo'}">
-      ${thumbContent}
-      ${dots}
+  const soldOutBadge = p.soldOut ? `<div class="sold-out-badge">Agotado</div>` : "";
+
+const orderButton = p.soldOut
+  ? `<span class="order-btn disabled">Agotado</span>`
+  : `<a class="order-btn" href="${waLink}" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.46 17.5 2 12.04 2zm4.51 11.96c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.96-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.21-.73-.65-1.22-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14-.01-.3-.01-.47-.01a.9.9 0 0 0-.65.3c-.22.25-.86.84-.86 2.04 0 1.2.88 2.37 1 2.53.12.17 1.74 2.66 4.22 3.72.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.66-1.17.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+      Pedir
+    </a>`;
+
+card.innerHTML = `
+  <div class="thumb${imgs.length ? '' : ' no-photo'}${p.soldOut ? ' sold-out-thumb' : ''}">
+    ${thumbContent}
+    ${dots}
+    ${soldOutBadge}
+  </div>
+  <div class="info">
+    <span class="cat-label">${p.category}</span>
+    <span class="name">${p.name}</span>
+    <p class="desc">${p.desc}</p>
+    <div class="row-bottom">
+      <span class="price">$${p.price}</span>
+      ${orderButton}
     </div>
-    <div class="info">
-      <span class="cat-label">${p.category}</span>
-      <span class="name">${p.name}</span>
-      <p class="desc">${p.desc}</p>
-      <div class="row-bottom">
-        <span class="price">$${p.price}</span>
-        <a class="order-btn" href="${waLink}" target="_blank">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.46 17.5 2 12.04 2zm4.51 11.96c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.96-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.21-.73-.65-1.22-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14-.01-.3-.01-.47-.01a.9.9 0 0 0-.65.3c-.22.25-.86.84-.86 2.04 0 1.2.88 2.37 1 2.53.12.17 1.74 2.66 4.22 3.72.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.66-1.17.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
-          Pedir
-        </a>
-      </div>
-    </div>
-  `;
+  </div>
+`;
 
   // Si el producto tiene más de una foto, permite pasar a la siguiente al hacer clic
   if (imgs.length > 1) {
