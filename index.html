@@ -176,6 +176,34 @@
   cursor: default;
   pointer-events: none;
 }
+.thumb-dots .dot{ cursor:pointer; }
+
+.lightbox{
+  display:none;
+  position:fixed; inset:0;
+  background: rgba(20,10,30,0.92);
+  z-index:100;
+  align-items:center; justify-content:center;
+}
+.lightbox.open{ display:flex; }
+.lightbox img{
+  max-width:90vw; max-height:85vh;
+  border-radius:4px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.lightbox-close{
+  position:absolute; top:20px; right:30px;
+  color:#fff; font-size:2.2rem; cursor:pointer;
+  line-height:1;
+}
+.lightbox-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  color:#fff; font-size:1.8rem; cursor:pointer;
+  padding:10px 16px;
+  user-select:none;
+}
+.lightbox-prev{ left:10px; }
+.lightbox-next{ right:10px; }
   
   .info{ padding: 20px 20px 22px; display:flex; flex-direction:column; gap:6px; flex:1; }
   .cat-label{ font-family:'Tenor Sans', sans-serif; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color: var(--purple); }
@@ -377,25 +405,69 @@ card.innerHTML = `
   </div>
 `;
 
-  // Si el producto tiene más de una foto, permite pasar a la siguiente al hacer clic
-  if (imgs.length > 1) {
+ // Al hacer clic en la foto, se abre la vista ampliada
+  if (imgs.length) {
     const thumbImg = card.querySelector('.thumb-img');
-    const dotEls = card.querySelectorAll('.dot');
+    thumbImg.style.cursor = "zoom-in";
     let current = 0;
+
     thumbImg.addEventListener('click', () => {
-      current = (current + 1) % imgs.length;
-      thumbImg.src = imgs[current];
-      dotEls.forEach((d, i) => d.classList.toggle('active', i === current));
+      openLightbox(imgs, current);
     });
+
+    if (imgs.length > 1) {
+      const dotEls = card.querySelectorAll('.dot');
+      dotEls.forEach((dot, i) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          current = i;
+          thumbImg.src = imgs[current];
+          dotEls.forEach((d, idx) => d.classList.toggle('active', idx === current));
+        });
+      });
+    }
   }
 
   grid.appendChild(card);
 });
   }
 
-  renderNav();
-  renderGrid();
-</script>
+renderNav();
+let lightboxImages = [];
+let lightboxIndex = 0;
 
+function openLightbox(images, index){
+  lightboxImages = images;
+  lightboxIndex = index;
+  updateLightboxImage();
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+}
+function lightboxNext(){
+  lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+  updateLightboxImage();
+}
+function lightboxPrev(){
+  lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+  updateLightboxImage();
+}
+function updateLightboxImage(){
+  document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex];
+  document.querySelectorAll('.lightbox-arrow').forEach(a => {
+    a.style.display = lightboxImages.length > 1 ? "block" : "none";
+  });
+}
+
+renderGrid();
+  
+</script>
+<div class="lightbox" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <span class="lightbox-arrow lightbox-prev" onclick="lightboxPrev()">&#10094;</span>
+  <img id="lightbox-img" src="" alt="Vista ampliada">
+  <span class="lightbox-arrow lightbox-next" onclick="lightboxNext()">&#10095;</span>
+</div>
 </body>
 </html>
