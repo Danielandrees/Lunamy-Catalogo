@@ -116,6 +116,21 @@
     color:#fff;
     border-color: var(--purple);
   }
+  .sort-row{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding: 6px 6vw 20px;
+  font-family:'Tenor Sans', sans-serif;
+  font-size:0.75rem; color:var(--text-muted);
+}
+.sort-row select{
+  font-family:'Tenor Sans', sans-serif;
+  font-size:0.75rem;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+}
 
   /* ---------- Product grid ---------- */
   main{ padding: 10px 6vw 90px; max-width:1280px; margin:0 auto; }
@@ -296,6 +311,14 @@ footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
 </div>
 
 <nav class="categories" id="categoryNav"></nav>
+<div class="sort-row">
+  <label for="sortSelect">Ordenar:</label>
+  <select id="sortSelect" onchange="activeSort=this.value; renderGrid();">
+    <option value="default">Más recientes</option>
+    <option value="price-asc">Precio: menor a mayor</option>
+    <option value="price-desc">Precio: mayor a menor</option>
+  </select>
+</div>
 
 <main>
   <div class="grid" id="grid"></div>
@@ -348,6 +371,11 @@ footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
   const categories = ["Todo", ...new Set(PRODUCTS.map(p => p.category))];
 
   let activeCategory = "Todo";
+  let activeSort = "default";
+
+function parsePrice(str){
+  return parseInt(String(str).replace(/\./g, ''), 10) || 0;
+}
 
   function renderNav(){
     nav.innerHTML = "";
@@ -365,9 +393,16 @@ footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
   }
 
   function renderGrid(){
-    grid.innerHTML = "";
-    const filtered = activeCategory === "Todo" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory);
-    emptyMsg.style.display = filtered.length ? "none" : "block";
+  grid.innerHTML = "";
+  let filtered = activeCategory === "Todo" ? [...PRODUCTS] : PRODUCTS.filter(p => p.category === activeCategory);
+
+  if (activeSort === "price-asc") {
+    filtered.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
+  } else if (activeSort === "price-desc") {
+    filtered.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
+  }
+
+  emptyMsg.style.display = filtered.length ? "none" : "block";
 
     filtered.forEach(p => {
   const card = document.createElement('div');
