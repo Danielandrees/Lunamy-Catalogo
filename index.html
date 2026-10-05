@@ -196,6 +196,20 @@
   border-color:#fff;
   box-shadow: 0 0 0 2px var(--purple);
 }
+.size-pills{
+  display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;
+}
+.pill{
+  padding:4px 10px;
+  border:1px solid var(--line);
+  border-radius:4px;
+  font-family:'Tenor Sans', sans-serif;
+  font-size:.7rem;
+  cursor:pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.pill:hover{ border-color: var(--purple); }
+.pill.active{ background: var(--purple); color:#fff; border-color: var(--purple); }
 
 .sold-out-thumb .thumb-img,
 .sold-out-thumb .thumb-dots{
@@ -480,6 +494,17 @@ footer p{ font-family:'Tenor Sans', sans-serif; letter-spacing:0.04em; }
   ],
   soldOut: true
 }, 
+ {
+    name: "Body Encaje",
+    category: "Bodys",
+    price: "45.000",
+    desc: "Body de encaje, elige tu talla y color.",
+    sizes: ["S", "M", "L"],
+    colors: [
+      { name: "Negro", hex: "#000000", img: "images/body-encaje-negro.jpg" },
+      { name: "Blanco", hex: "#ffffff", img: "images/body-encaje-blanco.jpg" }
+    ]
+  },
   ];
 
 
@@ -531,9 +556,10 @@ filtered.forEach(p => {
   card.className = "card";
 
   const hasColors = p.colors && p.colors.length > 0;
+  const hasSizes = p.sizes && p.sizes.length > 0;
   let selectedColor = 0;
+  let selectedSize = hasSizes ? p.sizes[0] : null;
 
-  // Fotos: si el producto tiene colores, usa la foto de cada color; si no, sigue igual que antes
   const imgs = hasColors
     ? p.colors.map(c => c.img).filter(Boolean)
     : (p.images && p.images.length ? p.images : (p.img ? [p.img] : []));
@@ -542,7 +568,6 @@ filtered.forEach(p => {
     ? `<img src="${imgs[0]}" alt="${p.name}" class="thumb-img">`
     : p.icon;
 
-  // Los puntitos (varias fotos del mismo color) solo aparecen si NO hay colores
   const dots = (!hasColors && imgs.length > 1)
     ? `<div class="thumb-dots">${imgs.map((_, i) => `<span class="dot${i === 0 ? ' active' : ''}"></span>`).join('')}</div>`
     : "";
@@ -550,6 +575,12 @@ filtered.forEach(p => {
   const colorSwatches = hasColors
     ? `<div class="color-swatches">
         ${p.colors.map((c, i) => `<span class="swatch${i === 0 ? ' active' : ''}" data-idx="${i}" style="background:${c.hex}" title="${c.name}"></span>`).join('')}
+      </div>`
+    : "";
+
+  const sizePills = hasSizes
+    ? `<div class="size-pills">
+        ${p.sizes.map((s, i) => `<span class="pill${i === 0 ? ' active' : ''}" data-idx="${i}">${s}</span>`).join('')}
       </div>`
     : "";
 
@@ -573,6 +604,7 @@ filtered.forEach(p => {
       <span class="name">${p.name}</span>
       <p class="desc">${p.desc}</p>
       ${colorSwatches}
+      ${sizePills}
       <div class="row-bottom">
         <span class="price">$${p.price}</span>
         <button class="add-cart-btn">+</button>
@@ -583,7 +615,6 @@ filtered.forEach(p => {
 
   const thumbImgEl = card.querySelector('.thumb-img');
 
-  // Cambiar de color: actualiza la foto y marca el color elegido
   if (hasColors) {
     const swatchEls = card.querySelectorAll('.swatch');
     swatchEls.forEach(sw => {
@@ -596,7 +627,17 @@ filtered.forEach(p => {
     });
   }
 
-  // Vista ampliada al hacer clic en la foto
+  if (hasSizes) {
+    const pillEls = card.querySelectorAll('.pill');
+    pillEls.forEach(pl => {
+      pl.addEventListener('click', () => {
+        selectedSize = p.sizes[parseInt(pl.dataset.idx, 10)];
+        pillEls.forEach(x => x.classList.remove('active'));
+        pl.classList.add('active');
+      });
+    });
+  }
+
   if (imgs.length) {
     thumbImgEl.style.cursor = "zoom-in";
     let current = 0;
@@ -617,17 +658,16 @@ filtered.forEach(p => {
     }
   }
 
-  // Botón "Pedir": arma el mensaje de WhatsApp incluyendo el color elegido
   if (!p.soldOut) {
     const orderBtnEl = card.querySelector('.order-btn');
     orderBtnEl.addEventListener('click', () => {
       const colorText = hasColors ? ` (Color: ${p.colors[selectedColor].name})` : "";
-      const message = encodeURIComponent(`¡Hola Lunamy! Me interesa este producto:\n\n${p.name}${colorText} — $${p.price}\n\n¿Está disponible?`);
+      const sizeText = hasSizes ? ` (Talla: ${selectedSize})` : "";
+      const message = encodeURIComponent(`¡Hola Lunamy! Me interesa este producto:\n\n${p.name}${colorText}${sizeText} — $${p.price}\n\n¿Está disponible?`);
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
     });
   }
 
-  // Botón "+": agrega al carrito indicando el color elegido
   const addBtn = card.querySelector('.add-cart-btn');
   if (p.soldOut) {
     addBtn.disabled = true;
@@ -635,7 +675,8 @@ filtered.forEach(p => {
   } else {
     addBtn.addEventListener('click', () => {
       const colorSuffix = hasColors ? ` (${p.colors[selectedColor].name})` : "";
-      addToCart({ name: p.name + colorSuffix, price: p.price });
+      const sizeSuffix = hasSizes ? ` (Talla ${selectedSize})` : "";
+      addToCart({ name: p.name + colorSuffix + sizeSuffix, price: p.price });
     });
   }
 
