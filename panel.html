@@ -7,46 +7,57 @@
 <title>Lunamy · Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--purple:#684d9a;--purple-dark:#523d7a;--lavender:#bfb3d7;--bg:#fbfaf9;--surface:#fff;--line:#e7e1ee;--text:#2b2138;--muted:#8a7f97;}
+:root{--purple:#684d9a;--purple-dark:#523d7a;--lavender:#bfb3d7;--lavender-soft:#ece8f4;--bg:#fbfaf9;--surface:#fff;--line:#e7e1ee;--text:#2b2138;--muted:#8a7f97;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;font-weight:300;min-height:100vh;}
-h1,h2{font-family:'Tenor Sans',sans-serif;font-weight:400;}
-button{font-family:'Tenor Sans',sans-serif;cursor:pointer;border:none;background:var(--purple);color:#fff;border-radius:4px;padding:8px 14px;font-size:.78rem;letter-spacing:.03em;}
+h1,h2,legend{font-family:'Tenor Sans',sans-serif;font-weight:400;}
+button{font-family:'Tenor Sans',sans-serif;cursor:pointer;border:none;background:var(--purple);color:#fff;border-radius:6px;padding:10px 18px;font-size:.85rem;letter-spacing:.03em;}
 button:hover{background:var(--purple-dark);}
-button.ghost{background:transparent;border:1px solid var(--line);color:var(--text);}
-button.ghost:hover{background:var(--lavender);}
-input,select{font-family:'Poppins',sans-serif;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);font-size:.85rem;}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--text);padding:6px 12px;}
+button.ghost:hover{background:var(--lavender-soft);}
+input,select{font-family:'Poppins',sans-serif;padding:8px 10px;border:1px solid var(--lavender);border-radius:6px;background:var(--surface);color:var(--text);font-size:.88rem;width:100%;}
+input:focus,select:focus{outline:2px solid var(--lavender);border-color:var(--purple);}
+
 .topbar{background:var(--purple);color:#fff;padding:14px 4vw;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.topbar h1{font-size:1.3rem;color:#fff;}
-.topbar .right{display:flex;align-items:center;gap:10px;font-size:.7rem;}
-.topbar button{background:rgba(255,255,255,.2);padding:5px 10px;}
-.tabs{display:flex;gap:8px;padding:16px 4vw 0;flex-wrap:wrap;}
-.tabs button{background:var(--surface);color:var(--muted);border:1px solid var(--line);}
+.topbar h1{font-size:1.4rem;color:#fff;}
+.topbar .right{display:flex;align-items:center;gap:10px;font-size:.72rem;}
+.topbar button{background:rgba(255,255,255,.2);padding:5px 10px;font-size:.72rem;}
+.tabs{display:flex;gap:8px;padding:16px 4vw 0;flex-wrap:wrap;max-width:900px;margin:0 auto;}
+.tabs button{background:var(--surface);color:var(--muted);border:1px solid var(--line);padding:8px 14px;font-size:.8rem;}
 .tabs button.active{background:var(--purple);color:#fff;border-color:var(--purple);}
-main{max-width:900px;margin:0 auto;padding:20px 4vw 60px;}
+main{max-width:860px;margin:0 auto;padding:20px 4vw 60px;}
 .view{display:none;}.view.active{display:block;}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:14px;}
-table{width:100%;border-collapse:collapse;font-size:.85rem;}
-th{text-align:left;color:var(--muted);font-family:'Tenor Sans',sans-serif;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--line);}
+.page-title{font-size:1.5rem;color:var(--purple);margin-bottom:16px;}
+
+/* Tarjetas con título, como el formulario de referencia */
+fieldset{background:var(--surface);border:1px solid var(--lavender);border-radius:10px;margin-bottom:20px;padding:16px 20px 20px;}
+legend{font-size:.95rem;color:var(--purple);padding:0 8px;letter-spacing:.04em;}
+.fila{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+label{display:flex;flex-direction:column;font-size:.8rem;gap:4px;color:var(--muted);}
+.chk{flex-direction:row;align-items:center;gap:8px;font-size:.82rem;margin-top:12px;color:var(--text);}
+.chk input{width:auto;}
+.hint{font-size:.78rem;color:var(--muted);margin-bottom:12px;}
+
+table{width:100%;border-collapse:collapse;font-size:.88rem;}
+th{text-align:left;color:var(--muted);font-family:'Tenor Sans',sans-serif;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--line);}
 td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle;}
 .qty-ctrl{display:flex;align-items:center;gap:6px;}.qty-ctrl button{padding:2px 9px;}
 .qty-low{color:#c0392b;font-weight:600;}
-.addform{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
-.addform input{flex:1;min-width:100px;}
-.full{width:100%;margin:8px 0;}
-.chk{font-size:.8rem;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-.chk input{width:auto;padding:0;}
-.inv-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
-.inv-row select{flex:2;}.inv-row input{width:70px;}
-.total-row{text-align:right;font-family:'Tenor Sans',sans-serif;font-size:1.1rem;margin-top:10px;}
+.addform{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-top:14px;}
+.inv-row{display:grid;grid-template-columns:3fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px;}
+.total-row{text-align:right;font-family:'Tenor Sans',sans-serif;font-size:1.2rem;color:var(--purple);margin-top:12px;}
 .clickable{cursor:pointer;}
-.clickable:hover{background:#f3f0f8;}
+.clickable:hover{background:var(--lavender-soft);}
 .empty{color:var(--muted);text-align:center;padding:30px 0;font-family:'Tenor Sans',sans-serif;}
+#vistaLogo{max-height:90px;max-width:220px;margin-top:8px;display:none;background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px;}
+.actions{display:flex;gap:10px;flex-wrap:wrap;}
+
 #login{max-width:380px;margin:12vh auto;text-align:center;padding:0 5vw;}
 #login h1{color:var(--purple);font-size:2rem;margin-bottom:8px;}
 #login p{color:var(--muted);font-size:.85rem;margin-bottom:20px;}
 #loginErr{color:#c0392b;font-size:.8rem;margin-top:14px;}
 #app{display:none;}
+@media(max-width:560px){.addform{grid-template-columns:1fr 1fr;}.addform button{grid-column:1/-1;}}
 </style>
 </head>
 <body>
@@ -70,57 +81,110 @@ td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle;}
     <button class="tab-btn active" data-tab="inv">Inventario</button>
     <button class="tab-btn" data-tab="new">Nueva factura</button>
     <button class="tab-btn" data-tab="list">Facturas</button>
-    <button class="tab-btn" data-tab="config">Mi logo</button>
+    <button class="tab-btn" data-tab="config">Mi negocio</button>
   </div>
 
   <main>
+    <!-- INVENTARIO -->
     <div class="view active" id="view-inv">
-      <div class="card">
+      <h2 class="page-title">Inventario</h2>
+      <fieldset>
+        <legend>Productos</legend>
         <table><thead><tr><th>Producto</th><th>Precio</th><th>Existencias</th><th></th></tr></thead>
         <tbody id="invTable"></tbody></table>
         <p class="empty" id="invEmpty" style="display:none;">Aún no has agregado productos.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Agregar producto</legend>
         <div class="addform">
           <input id="newName" placeholder="Nombre del producto">
           <input id="newPrice" placeholder="Precio (ej: 15000)" type="number">
           <input id="newQty" placeholder="Cantidad" type="number">
           <button onclick="addItem()">Agregar</button>
         </div>
-      </div>
+      </fieldset>
     </div>
 
+    <!-- NUEVA FACTURA -->
     <div class="view" id="view-new">
-      <div class="card">
-        <h2 style="margin-bottom:10px;">Nueva factura</h2>
-        <input id="sellerName" class="full" placeholder="Nombre de quien realiza la venta">
-        <input id="custName" class="full" placeholder="Nombre del cliente (comprador)">
-        <input id="custAddr" class="full" placeholder="Dirección del cliente">
-        <label class="chk"><input type="checkbox" id="shipDiff" onchange="document.getElementById('shipAddr').style.display=this.checked?'block':'none';"> Enviar a una dirección distinta</label>
-        <input id="shipAddr" class="full" placeholder="Dirección de envío" style="display:none;">
-        <div id="invoiceRows" style="margin-top:10px;"></div>
+      <h2 class="page-title">Generador de facturas</h2>
+
+      <fieldset>
+        <legend>Datos de la factura</legend>
+        <div class="fila">
+          <label>Número de factura
+            <input id="numeroFactura" type="text" placeholder="Automático (ej: 2026_001)">
+          </label>
+          <label>Fecha
+            <input id="fechaFactura" type="date">
+          </label>
+          <label>Nombre de quien realiza la venta
+            <input id="sellerName" type="text">
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Datos del cliente</legend>
+        <div class="fila">
+          <label>Nombre o razón social <input id="cliNombre" type="text"></label>
+          <label>Cédula o NIT <input id="cliDocumento" type="text"></label>
+          <label>Dirección <input id="cliDireccion" type="text"></label>
+          <label>Teléfono <input id="cliTelefono" type="text"></label>
+          <label>Correo <input id="cliCorreo" type="email"></label>
+        </div>
+        <label class="chk"><input type="checkbox" id="shipDiff" onchange="document.getElementById('shipWrap').style.display=this.checked?'block':'none';"> Enviar a una dirección distinta</label>
+        <div id="shipWrap" style="display:none;margin-top:10px;">
+          <label>Dirección de envío <input id="shipAddr" type="text"></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Productos</legend>
+        <div id="invoiceRows"></div>
         <button class="ghost" onclick="addRow()">+ Agregar producto</button>
         <div class="total-row" id="newTotal">Total: $0</div>
-        <div style="margin-top:12px;"><button onclick="saveInvoice()">Guardar y descontar inventario</button></div>
+      </fieldset>
+
+      <div class="actions">
+        <button onclick="saveInvoice()">Guardar y descontar inventario</button>
       </div>
     </div>
 
+    <!-- FACTURAS -->
     <div class="view" id="view-list">
-      <div class="card">
-        <p style="font-size:.75rem;color:var(--muted);margin-bottom:8px;">Toca una factura para imprimirla.</p>
+      <h2 class="page-title">Facturas</h2>
+      <fieldset>
+        <legend>Facturas guardadas</legend>
+        <p class="hint">Toca una factura para imprimirla.</p>
         <table><thead><tr><th>#</th><th>Cliente</th><th>Fecha</th><th>Total</th><th></th></tr></thead>
         <tbody id="invoicesTable"></tbody></table>
         <p class="empty" id="invoicesEmpty" style="display:none;">Aún no hay facturas guardadas.</p>
-      </div>
+      </fieldset>
     </div>
 
+    <!-- MI NEGOCIO -->
     <div class="view" id="view-config">
-      <div class="card">
-        <h2 style="margin-bottom:6px;">Logo del negocio</h2>
-        <p style="font-size:.8rem;color:var(--muted);margin-bottom:12px;">Lo subes una sola vez aquí. Se usa en todas las facturas y lo ven ambos.</p>
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-          <img id="bizLogoPreview" src="" alt="Logo" style="width:80px;height:80px;object-fit:contain;border:1px solid var(--line);border-radius:6px;display:none;background:#fff;">
-          <input type="file" id="bizLogoInput" accept="image/*" onchange="uploadLogo(event)">
+      <h2 class="page-title">Mi negocio</h2>
+      <p class="hint">Se llena una sola vez. Estos datos salen automáticamente en todas las facturas.</p>
+      <fieldset>
+        <legend>Logo</legend>
+        <label>Logo de la empresa
+          <input id="logo" type="file" accept="image/*" onchange="uploadLogo(event)">
+        </label>
+        <img id="vistaLogo" alt="Logo del negocio">
+      </fieldset>
+      <fieldset>
+        <legend>Datos del negocio (opcionales)</legend>
+        <div class="fila">
+          <label>Nombre de la empresa <input id="negNombre" type="text"></label>
+          <label>NIT <input id="negNit" type="text"></label>
+          <label>Dirección <input id="negDireccion" type="text"></label>
+          <label>Teléfono <input id="negTelefono" type="text"></label>
+          <label>Correo <input id="negCorreo" type="email"></label>
         </div>
-      </div>
+        <div class="actions" style="margin-top:16px;"><button onclick="saveBusiness()">Guardar datos del negocio</button></div>
+      </fieldset>
     </div>
   </main>
 </div>
@@ -129,9 +193,6 @@ td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle;}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-// ============================================================
-//  PEGA AQUÍ LA CONFIGURACIÓN DE FIREBASE (te explico dónde sale)
-// ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyBsB2j1TRq4hxEztuBe05XgHjsmS15aPB8",
   authDomain: "lunamy-de0ac.firebaseapp.com",
@@ -140,7 +201,6 @@ const firebaseConfig = {
   messagingSenderId: "1082493246148",
   appId: "1:1082493246148:web:60385fee730cd057ec0791"
 };
-// ============================================================
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
@@ -151,12 +211,16 @@ let unsubs = [];
 
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function money(n){ return '$' + Number(n||0).toLocaleString('es-CO'); }
+function todayISO(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fmtDate(iso){ const p=String(iso||'').split('-'); return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : (iso||''); }
+const $ = id => document.getElementById(id);
+const val = id => $(id).value.trim();
 
 /* ---------- Entrada / salida ---------- */
 function signIn(){
-  document.getElementById('loginErr').textContent='';
+  $('loginErr').textContent='';
   auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>{
-    document.getElementById('loginErr').textContent='No se pudo entrar: '+(e.code||e.message);
+    $('loginErr').textContent='No se pudo entrar: '+(e.code||e.message);
   });
 }
 function signOut(){ auth.signOut(); }
@@ -164,24 +228,25 @@ function signOut(){ auth.signOut(); }
 auth.onAuthStateChanged(user=>{
   unsubs.forEach(u=>u()); unsubs=[];
   if(user){
-    document.getElementById('login').style.display='none';
-    document.getElementById('app').style.display='block';
+    $('login').style.display='none';
+    $('app').style.display='block';
+    $('fechaFactura').value = todayISO();
     startData();
   } else {
-    document.getElementById('login').style.display='block';
-    document.getElementById('app').style.display='none';
+    $('login').style.display='block';
+    $('app').style.display='none';
   }
 });
 
 function dataError(e){
-  document.getElementById('status').textContent='Sin permiso';
+  $('status').textContent='Sin permiso';
   if(e && e.code==='permission-denied'){
     alert('Esta cuenta de Google no tiene permiso para usar el panel. Entra con el correo autorizado.');
   }
 }
 
 function startData(){
-  document.getElementById('status').textContent='Conectado';
+  $('status').textContent='Conectado';
   unsubs.push(fs.collection('inventory').onSnapshot(snap=>{
     inventory = snap.docs.map(d=>({id:d.id,...d.data()}));
     inventory.sort((a,b)=>(a.name||'').localeCompare(b.name||''));
@@ -193,9 +258,13 @@ function startData(){
   }, dataError));
   unsubs.push(fs.doc('meta/business').onSnapshot(snap=>{
     businessInfo = snap.exists ? snap.data() : {};
-    const img = document.getElementById('bizLogoPreview');
-    if(businessInfo.logo){ img.src = businessInfo.logo; img.style.display='inline-block'; }
+    const img = $('vistaLogo');
+    if(businessInfo.logo){ img.src = businessInfo.logo; img.style.display='block'; }
     else { img.style.display='none'; }
+    // Rellenar los campos solo si el usuario no está escribiendo en ellos
+    [['negNombre','nombre'],['negNit','nit'],['negDireccion','direccion'],['negTelefono','telefono'],['negCorreo','correo']].forEach(([id,k])=>{
+      if(document.activeElement!==$(id)) $(id).value = businessInfo[k]||'';
+    });
   }, dataError));
 }
 
@@ -205,14 +274,14 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('view-'+btn.dataset.tab).classList.add('active');
+    $('view-'+btn.dataset.tab).classList.add('active');
   });
 });
 
 /* ---------- Inventario ---------- */
 function renderInventory(){
-  document.getElementById('invEmpty').style.display = inventory.length ? 'none':'block';
-  document.getElementById('invTable').innerHTML = inventory.map(it=>`
+  $('invEmpty').style.display = inventory.length ? 'none':'block';
+  $('invTable').innerHTML = inventory.map(it=>`
     <tr>
       <td>${esc(it.name)}</td>
       <td>${money(it.price)}</td>
@@ -233,13 +302,13 @@ async function deleteItem(id){
   try{ await fs.doc('inventory/'+id).delete(); }catch(e){ alert('No se pudo eliminar.'); }
 }
 async function addItem(){
-  const name=document.getElementById('newName').value.trim();
-  const price=parseInt(document.getElementById('newPrice').value)||0;
-  const qty=parseInt(document.getElementById('newQty').value)||0;
+  const name=val('newName');
+  const price=parseInt($('newPrice').value)||0;
+  const qty=parseInt($('newQty').value)||0;
   if(!name){ alert('Escribe el nombre del producto'); return; }
   try{
     await fs.collection('inventory').add({name,price,qty});
-    ['newName','newPrice','newQty'].forEach(i=>document.getElementById(i).value='');
+    ['newName','newPrice','newQty'].forEach(i=>$(i).value='');
   }catch(e){ alert('No se pudo guardar.'); }
 }
 
@@ -249,7 +318,7 @@ function addRow(){
   const div=document.createElement('div');
   div.className='inv-row'; div.id='row-'+rowCount;
   div.innerHTML=`<select onchange="calcTotal()"></select><input type="number" value="1" min="1" onchange="calcTotal()"><button class="ghost" onclick="document.getElementById('row-${rowCount}').remove();calcTotal();">×</button>`;
-  document.getElementById('invoiceRows').appendChild(div);
+  $('invoiceRows').appendChild(div);
   refreshInvoiceSelects(); calcTotal();
 }
 function refreshInvoiceSelects(){
@@ -265,7 +334,7 @@ function calcTotal(){
     const it=inventory.find(i=>i.id===row.querySelector('select').value);
     if(it) total+=it.price*(parseInt(row.querySelector('input').value)||0);
   });
-  document.getElementById('newTotal').textContent='Total: '+money(total);
+  $('newTotal').textContent='Total: '+money(total);
 }
 async function nextInvoiceNumber(){
   const year=new Date().getFullYear();
@@ -279,10 +348,6 @@ async function nextInvoiceNumber(){
   });
 }
 async function saveInvoice(){
-  const sellerName=document.getElementById('sellerName').value.trim();
-  const customer=document.getElementById('custName').value.trim()||'Cliente';
-  const custAddr=document.getElementById('custAddr').value.trim();
-  const shipAddr=document.getElementById('shipDiff').checked?document.getElementById('shipAddr').value.trim():custAddr;
   const rows=document.querySelectorAll('#invoiceRows .inv-row');
   if(!rows.length){ alert('Agrega al menos un producto'); return; }
   const items=[]; let total=0;
@@ -292,35 +357,46 @@ async function saveInvoice(){
     if(it && qty>0){ items.push({id:it.id,name:it.name,price:it.price,qty}); total+=it.price*qty; }
   });
   if(!items.length){ alert('Agrega al menos un producto válido'); return; }
+
+  const custAddr=val('cliDireccion');
+  const data={
+    sellerName:val('sellerName'),
+    customer:val('cliNombre')||'Cliente',
+    custDoc:val('cliDocumento'),
+    custAddr,
+    custPhone:val('cliTelefono'),
+    custMail:val('cliCorreo'),
+    shipAddr:$('shipDiff').checked?val('shipAddr'):custAddr,
+    items,total,
+    issueDate:$('fechaFactura').value||todayISO(),
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  };
   try{
-    const number=await nextInvoiceNumber();
-    const issueDate=new Date().toLocaleDateString('es-CO');
+    data.number = val('numeroFactura') || await nextInvoiceNumber();
     const batch=fs.batch();
-    batch.set(fs.collection('invoices').doc(),{
-      sellerName,customer,custAddr,shipAddr,items,total,number,issueDate,
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
-    });
+    batch.set(fs.collection('invoices').doc(),data);
     items.forEach(it=>{
       batch.update(fs.doc('inventory/'+it.id),{qty:firebase.firestore.FieldValue.increment(-it.qty)});
     });
     await batch.commit();
-    ['sellerName','custName','custAddr','shipAddr'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('shipDiff').checked=false;
-    document.getElementById('shipAddr').style.display='none';
-    document.getElementById('invoiceRows').innerHTML='';
+    ['numeroFactura','sellerName','cliNombre','cliDocumento','cliDireccion','cliTelefono','cliCorreo','shipAddr'].forEach(id=>$(id).value='');
+    $('fechaFactura').value=todayISO();
+    $('shipDiff').checked=false;
+    $('shipWrap').style.display='none';
+    $('invoiceRows').innerHTML='';
     calcTotal();
-    alert('Factura guardada: '+number);
+    alert('Factura guardada: '+data.number);
   }catch(e){ alert('No se pudo guardar la factura.'); }
 }
 
 /* ---------- Lista de facturas e impresión ---------- */
 function renderInvoicesList(){
-  document.getElementById('invoicesEmpty').style.display=invoices.length?'none':'block';
-  document.getElementById('invoicesTable').innerHTML=invoices.map(inv=>`
+  $('invoicesEmpty').style.display=invoices.length?'none':'block';
+  $('invoicesTable').innerHTML=invoices.map(inv=>`
     <tr>
       <td class="clickable" onclick="printInvoice('${inv.id}')">${esc(inv.number)}</td>
       <td class="clickable" onclick="printInvoice('${inv.id}')">${esc(inv.customer)}</td>
-      <td class="clickable" onclick="printInvoice('${inv.id}')">${esc(inv.issueDate)}</td>
+      <td class="clickable" onclick="printInvoice('${inv.id}')">${esc(fmtDate(inv.issueDate))}</td>
       <td class="clickable" onclick="printInvoice('${inv.id}')">${money(inv.total)}</td>
       <td><button class="ghost" onclick="deleteInvoice('${inv.id}')">Eliminar</button></td>
     </tr>`).join('');
@@ -331,21 +407,29 @@ async function deleteInvoice(id){
 function printInvoice(id){
   const inv=invoices.find(i=>i.id===id);
   if(!inv) return;
-  const logo=businessInfo.logo||'';
+  const b=businessInfo||{};
+  const logo=b.logo||'';
+  const bizLines=[b.nombre, b.nit?('NIT '+b.nit):'', b.direccion, b.telefono, b.correo].filter(Boolean).map(esc).join('<br>');
+  const custLines=[esc(inv.customer), inv.custDoc?('C.C./NIT '+esc(inv.custDoc)):'', esc(inv.custAddr), esc(inv.custPhone), esc(inv.custMail)].filter(Boolean).join('<br>');
   const html=`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Factura ${esc(inv.number)}</title>
   <style>
     body{font-family:sans-serif;color:#2b2138;padding:30px;max-width:650px;margin:0 auto;}
-    .pi-head{border-bottom:2px solid #684d9a;padding-bottom:10px;margin-bottom:14px;}
+    .pi-head{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:2px solid #684d9a;padding-bottom:12px;margin-bottom:14px;}
+    .pi-biz{font-size:.8rem;line-height:1.5;text-align:right;color:#555;}
     .pi-parties{width:100%;margin-bottom:14px;border-collapse:collapse;}
     .pi-parties td{vertical-align:top;width:50%;padding:0;font-size:.85rem;line-height:1.5;}
     table.pi-items{width:100%;border-collapse:collapse;margin-top:10px;}
     .pi-items th,.pi-items td{border-bottom:1px solid #ccc;padding:6px 4px;font-size:.9rem;text-align:left;}
-    .total{text-align:right;margin-top:12px;font-size:1.1rem;}
+    .pi-items th{background:#ece8f4;}
+    .total{text-align:right;margin-top:12px;font-size:1.1rem;color:#684d9a;}
   </style></head><body>
-  <div class="pi-head">${logo?`<img src="${logo}" alt="Logo" style="max-height:70px;max-width:220px;object-fit:contain;">`:''}</div>
-  <p style="font-size:.9rem;margin-bottom:10px;"><strong>Factura:</strong> ${esc(inv.number)} &nbsp; <strong>Fecha de emisión:</strong> ${esc(inv.issueDate)}${inv.sellerName?(' &nbsp; <strong>Vendido por:</strong> '+esc(inv.sellerName)):''}</p>
+  <div class="pi-head">
+    <div>${logo?`<img src="${logo}" alt="Logo" style="max-height:70px;max-width:220px;object-fit:contain;">`:''}</div>
+    <div class="pi-biz">${bizLines}</div>
+  </div>
+  <p style="font-size:.9rem;margin-bottom:12px;"><strong>Factura:</strong> ${esc(inv.number)} &nbsp; <strong>Fecha de emisión:</strong> ${esc(fmtDate(inv.issueDate))}${inv.sellerName?(' &nbsp; <strong>Vendido por:</strong> '+esc(inv.sellerName)):''}</p>
   <table class="pi-parties"><tr>
-    <td><strong>Comprador:</strong><br>${esc(inv.customer)}<br>${esc(inv.custAddr)}</td>
+    <td><strong>Comprador:</strong><br>${custLines}</td>
     <td><strong>Dirección de envío:</strong><br>${esc(inv.shipAddr||inv.custAddr||'—')}</td>
   </tr></table>
   <table class="pi-items"><thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead>
@@ -358,7 +442,7 @@ function printInvoice(id){
   win.document.write(html); win.document.close();
 }
 
-/* ---------- Logo (se guarda dentro de la base de datos, achicado) ---------- */
+/* ---------- Mi negocio ---------- */
 function uploadLogo(e){
   const file=e.target.files[0];
   if(!file) return;
@@ -371,13 +455,21 @@ function uploadLogo(e){
       const c=document.createElement('canvas');
       c.width=Math.round(img.width*scale); c.height=Math.round(img.height*scale);
       c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-      const data=c.toDataURL('image/png');
-      try{ await fs.doc('meta/business').set({logo:data}); }
+      try{ await fs.doc('meta/business').set({logo:c.toDataURL('image/png')},{merge:true}); }
       catch(err){ alert('No se pudo guardar el logo.'); }
     };
     img.src=reader.result;
   };
   reader.readAsDataURL(file);
+}
+async function saveBusiness(){
+  try{
+    await fs.doc('meta/business').set({
+      nombre:val('negNombre'), nit:val('negNit'), direccion:val('negDireccion'),
+      telefono:val('negTelefono'), correo:val('negCorreo')
+    },{merge:true});
+    alert('Datos del negocio guardados.');
+  }catch(e){ alert('No se pudo guardar.'); }
 }
 </script>
 </body>
